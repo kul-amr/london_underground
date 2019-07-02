@@ -1,9 +1,12 @@
 from flask import Flask
 import os
+from app import blueprint
 
 
 app = Flask(__name__)
 app.config.from_object(os.environ['APP_SETTINGS'])
+
+app.register_blueprint(blueprint)
 
 # print(os.environ['APP_SETTINGS'])
 
@@ -20,6 +23,7 @@ def hello_name(name):
 
 
 
-if __name__ == '__main__':
-    app.run()
+# if __name__ == '__main__':
+
+app.run()
 
