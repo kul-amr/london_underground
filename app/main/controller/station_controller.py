@@ -25,7 +25,7 @@ class StationList(Resource):
         return add_station(data)
 
 
-@api.route('/<station_id>')
+@api.route('/<int:station_id>')
 @api.param('station_id')
 @api.response(404,'station not found')
 class Station(Resource):
@@ -33,6 +33,21 @@ class Station(Resource):
     @api.marshal_with(_station)
     def get(self, station_id):
         station = get_station(station_id=station_id)
+
+        if not station:
+            api.abort(404)
+        else:
+            return station
+
+
+@api.route('/<string:station_name>')
+@api.param('station_name')
+@api.response(404,'station not found')
+class Station(Resource):
+    @api.doc('get_station_with_name')
+    @api.marshal_with(_station)
+    def get(self, station_name):
+        station = get_station(station_name=station_name)
 
         if not station:
             api.abort(404)
