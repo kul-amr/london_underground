@@ -168,6 +168,8 @@ ipython_config.py
 .python-version
 
 
+.idea/
+
 
 # pipenv
 
