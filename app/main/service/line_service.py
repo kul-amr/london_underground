@@ -1,12 +1,5 @@
 from ..util.connect_db import *
-
-
-def serialize_line(line):
-
-    return {
-        'name': line["name"],
-        'colour': line["colour"]
-    }
+from ..util.serializer import *
 
 
 def get_lines():
@@ -62,5 +55,27 @@ def get_line(line_id=None, line_name=None):
 
         for record in lines_resultset:
             return serialize_line(record)
+
+    return {'message': 'line not found'}, 404
+
+
+def get_stations(line_name):
+
+    session = get_session()
+
+    line_qry = 'MATCH (n:Line) WHERE n.name="{}"  RETURN n.id as id LIMIT 1'.format(line_name)
+
+    lines_resultset = session.run(line_qry)
+
+    for record in lines_resultset:
+        line_id = record['id']
+
+        stations_qry = 'MATCH (p:Station)-[r:CONNECTION]->() WHERE r.line="{}" RETURN distinct(p)'.format(line_id)
+
+        stations_resultset = session.run(stations_qry)
+
+        session.close()
+
+        return [serialize_station(station) for station in stations_resultset]
 
     return {'message': 'line not found'}, 404

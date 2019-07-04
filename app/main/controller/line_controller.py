@@ -1,11 +1,12 @@
 from flask import request
 from flask_restplus import Resource
 
-from ..util.dao import LineDao
+from ..util.dao import LineDao, StationDao
 from ..service.line_service import *
 
 api = LineDao.api
 _line = LineDao.line
+_station = StationDao.station
 
 
 
@@ -53,3 +54,18 @@ class Line(Resource):
             api.abort(404)
         else:
             return line
+
+
+@api.route('/<string:line_name>/list-stations')
+@api.param('line_name')
+@api.response(404,'line not found')
+class LineStations(Resource):
+    @api.doc('get_stations_of_given_line')
+    @api.marshal_list_with(_station,envelope='data')
+    def get(self, line_name):
+        stations = get_stations(line_name=line_name)
+
+        if not stations:
+            api.abort(404)
+        else:
+            return stations

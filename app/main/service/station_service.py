@@ -1,13 +1,5 @@
 from ..util.connect_db import *
-
-
-def serialize_station(station):
-
-    return {
-        'name': station["name"],
-        'total_lines': station["total_lines"],
-        'zone': station["zone"]
-    }
+from ..util.serializer import *
 
 
 def get_stations():

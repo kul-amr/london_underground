@@ -61,7 +61,7 @@ class Station(Resource):
 @api.response(404,'station not found')
 class StationInterchanges(Resource):
     @api.doc('get_tootal_interchanges_for_given_station_with_name')
-    @api.marshal_with({"interchanges":fields.Integer})
+    # @api.marshal_with({"interchanges":fields.Integer})
     def get(self, station_name):
         interchanges = get_station_interchanges(station_name=station_name)
 
