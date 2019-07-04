@@ -65,3 +65,20 @@ def get_station(station_id=None,station_name=None):
             return serialize_station(record)
 
     return {'message':'station not found'}, 404
+
+
+def get_station_interchanges(station_name):
+
+    session = get_session()
+
+    interchanges_qry = 'MATCH (n:Station) WHERE n.name="{}"  RETURN n.total_lines as interchanges'.format(station_name)
+
+    station = session.run(interchanges_qry)
+
+    session.close()
+
+    for record in station:
+        print(record["interchanges"])
+        return {"interchanges": record["interchanges"]}
+
+    return {'message': 'station not found'}, 404

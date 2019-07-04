@@ -1,5 +1,6 @@
 from flask import request
 from flask_restplus import Resource
+from flask_restplus import fields
 
 from ..util.dao import StationDao
 from ..service.station_service import *
@@ -53,3 +54,18 @@ class Station(Resource):
             api.abort(404)
         else:
             return station
+
+
+@api.route('/<string:station_name>/interchanges')
+@api.param('station_name')
+@api.response(404,'station not found')
+class StationInterchanges(Resource):
+    @api.doc('get_tootal_interchanges_for_given_station_with_name')
+    @api.marshal_with({"interchanges":fields.Integer})
+    def get(self, station_name):
+        interchanges = get_station_interchanges(station_name=station_name)
+
+        if not interchanges:
+            api.abort(404)
+        else:
+            return interchanges
