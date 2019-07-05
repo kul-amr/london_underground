@@ -16,6 +16,7 @@ class StationList(Resource):
     @api.doc('list_of_all_stations')
     @api.marshal_list_with(_station,envelope='data')
     def get(self):
+        """Returns list of all stations"""
         return get_stations()
 
     @api.response(201,'station created successfully')
