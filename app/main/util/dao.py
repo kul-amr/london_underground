@@ -19,3 +19,12 @@ class LineDao:
         'name': fields.String(required=True, description='name'),
         'colour': fields.String(required=True, description='colour')
     })
+
+
+class RouteDao:
+
+    api = Namespace('Route', description='route related operations')
+    route = api.model('Route', {
+        'station':fields.String(required=True, description='station_name'),
+        'time':fields.Integer(required=True, description='time_to_reach')
+    })

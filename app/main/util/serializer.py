@@ -2,7 +2,6 @@
 
 def serialize_station(station):
 
-    print(station)
     return {
         'name': station["name"],
         'total_lines': station["total_lines"],
@@ -17,3 +16,9 @@ def serialize_line(line):
         'colour': line["colour"]
     }
 
+def serialize_stop(station_stop):
+
+    return {
+        'station' : station_stop["station"],
+        'time' : station_stop["time"]
+    }

@@ -68,14 +68,17 @@ def get_stations(line_name):
     lines_resultset = session.run(line_qry)
 
     for record in lines_resultset:
+
         line_id = record['id']
 
-        stations_qry = 'MATCH (p:Station)-[r:CONNECTION]->() WHERE r.line="{}" RETURN distinct(p)'.format(line_id)
+        stations_qry = 'MATCH (p:Station)-[r:CONNECTION]->() WHERE r.line="{}" ' \
+                       'WITH distinct(p) RETURN p.name as name, p.total_lines as total_lines, p.zone as zone'.format(line_id)
 
         stations_resultset = session.run(stations_qry)
 
         session.close()
 
         return [serialize_station(station) for station in stations_resultset]
+
 
     return {'message': 'line not found'}, 404

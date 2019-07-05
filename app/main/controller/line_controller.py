@@ -63,9 +63,4 @@ class LineStations(Resource):
     @api.doc('get_stations_of_given_line')
     @api.marshal_list_with(_station,envelope='data')
     def get(self, line_name):
-        stations = get_stations(line_name=line_name)
-
-        if not stations:
-            api.abort(404)
-        else:
-            return stations
+        return get_stations(line_name=line_name)
