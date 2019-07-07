@@ -23,6 +23,7 @@ class StationList(Resource):
     @api.doc('create_new_station')
     @api.expect(_station,validate=True)
     def post(self):
+        """Add a new station"""
         data =  request.json
         return add_station(data)
 
@@ -34,6 +35,7 @@ class Station(Resource):
     @api.doc('get_station_with_id')
     @api.marshal_with(_station)
     def get(self, station_id):
+        """Get station by Id"""
         station = get_station(station_id=station_id)
 
         if not station:
@@ -49,6 +51,7 @@ class Station(Resource):
     @api.doc('get_station_with_name')
     @api.marshal_with(_station)
     def get(self, station_name):
+        """Get station by name"""
         station = get_station(station_name=station_name)
 
         if not station:
@@ -64,6 +67,7 @@ class StationInterchanges(Resource):
     @api.doc('get_tootal_interchanges_for_given_station_with_name')
     # @api.marshal_with({"interchanges":fields.Integer})
     def get(self, station_name):
+        """Get number of line interchanges available for given station"""
         interchanges = get_station_interchanges(station_name=station_name)
 
         if not interchanges:
