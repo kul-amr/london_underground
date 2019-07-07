@@ -1,4 +1,8 @@
 from neo4j import GraphDatabase, basic_auth
+import os
+
+
+dir_path = os.path.dirname(os.path.realpath(__file__))
 
 
 def get_driver():
@@ -24,24 +28,15 @@ def create_schema():
 def import_stations():
     driver = get_driver()
 
-    qry_stations = '''LOAD CSV WITH HEADERS FROM
-                            "file:///home/amruta/Amruta/london_underground/datasets/london-stations.csv" as row
-                        MERGE (s:Station{id:row.id})
-                        ON CREATE SET s.name = row.name,
-                          s.latitude=row.latitude,
-                          s.longitude=row.longitude,
-                          s.zone=row.zone,
-                          s.total_lines=row.total_lines'''
+    qry_stations = 'LOAD CSV WITH HEADERS FROM ' \
+                   ' "file:///%s/datasets/london-stations.csv" as row' \
+                   ' MERGE (s:Station{id:row.id}) ' \
+                   'ON CREATE SET s.name = row.name,' \
+                   's.latitude=row.latitude,' \
+                   ' s.longitude=row.longitude,' \
+                   's.zone=row.zone,' \
+                   ' s.total_lines=row.total_lines' %dir_path
 
-
-    # qry_stations = '''LOAD CSV WITH HEADERS FROM
-    #                     "https://raw.githubusercontent.com/nicola/tubemaps/master/datasets/london.stations.csv" as row
-    #                 MERGE (s:Station{id:row.id})
-    #                 ON CREATE SET s.name = row.name,
-    #                   s.latitude=row.latitude,
-    #                   s.longitude=row.longitude,
-    #                   s.zone=row.zone,
-    #                   s.total_lines=row.total_lines'''
 
     with driver.session() as session:
         session.run(qry_stations)
@@ -51,18 +46,12 @@ def import_lines():
     driver = get_driver()
 
     qry_lines = '''LOAD CSV WITH HEADERS FROM
-                           "file:///home/amruta/Amruta/london_underground/datasets/london-lines.csv" as row
+                           "file:///%s/datasets/london-lines.csv" as row
                        MERGE (l:Line{id:row.line})
                        ON CREATE SET l.name = row.name,
                          l.colour=row.colour,
-                         l.stripe=row.stripe'''
+                         l.stripe=row.stripe''' %dir_path
 
-    # qry_lines = '''LOAD CSV WITH HEADERS FROM
-    #                        "https://raw.githubusercontent.com/nicola/tubemaps/master/datasets/london.lines.csv" as row
-    #                    MERGE (l:Line{id:row.line})
-    #                    ON CREATE SET l.name = row.name,
-    #                      l.colour=row.colour,
-    #                      l.stripe=row.stripe'''
 
     with driver.session() as session:
         session.run(qry_lines)
@@ -73,18 +62,12 @@ def import_connections():
     driver = get_driver()
 
     qry_connections = '''LOAD CSV WITH HEADERS FROM
-                            "file:///home/amruta/Amruta/london_underground/datasets/london-connections.csv" as row
+                            "file:///%s/datasets/london-connections.csv" as row
                             MATCH (s1:Station{id:row.station1})
                             MATCH (s2:Station{id:row.station2})
                             MERGE (s1)-[:CONNECTION{time:row.time,line:row.line}]->(s2)
-                            MERGE (s1)<-[:CONNECTION{time:row.time,line:row.line}]-(s2)'''
+                            MERGE (s1)<-[:CONNECTION{time:row.time,line:row.line}]-(s2)''' %dir_path
 
-    # qry_connections = '''LOAD CSV WITH HEADERS FROM
-    #                     "https://raw.githubusercontent.com/nicola/tubemaps/master/datasets/london.connections.csv" as row
-    #                     MATCH (s1:Station{id:row.station1})
-    #                     MATCH (s2:Station{id:row.station2})
-    #                     MERGE (s1)-[:CONNECTION{time:row.time,line:row.line}]->(s2)
-    #                     MERGE (s1)<-[:CONNECTION{time:row.time,line:row.line}]-(s2)'''
 
     with driver.session() as session:
         session.run(qry_connections)
