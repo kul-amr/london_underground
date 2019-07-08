@@ -11,7 +11,6 @@ MarkupSafe==1.1.1
 neo4j==1.7.4
 neobolt==1.7.13
 neotime==1.7.4
-pkg-resources==0.0.0
 pyrsistent==0.15.2
 pytz==2019.1
 six==1.12.0
