@@ -1,6 +1,6 @@
 # london_underground
 
-I had worked with relational and no-sql data in past but not the graph data. I wanted to learn/explore about how to use/serve graph data.
+I had worked with relational and key-value no-sql data in past but not the graph data. I wanted to learn/explore about how to use/serve graph data.
 So I started to exlpore a bit about Neo4j graph database and Cypher query language.
 
 Here I have created a backend with Python (flask-restplus) querying Neo4j garph database with Cypher queries. I have used london undergrounds
