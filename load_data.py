@@ -16,12 +16,10 @@ def create_schema():
 
     qry_constraint = "CREATE CONSTRAINT ON (s:Station) ASSERT s.id is unique;"
     qry_constraint_oth = "CREATE CONSTRAINT ON (s:Station) ASSERT s.name is unique;"
-    # qry_index = "CREATE INDEX ON :Station(name);"
 
     with driver.session() as session:
         session.run(qry_constraint)
         session.run(qry_constraint_oth)
-        # session.run(qry_index)
     session.close()
 
 
@@ -85,3 +83,26 @@ def main():
 
 
 main()
+
+
+# MATCH (l:Line), ()-[r:CONNECTION]->() SET(CASE WHEN r.line=l.id THEN r END).line_name = l.name  RETURN r
+
+
+# LOAD CSV WITH HEADERS FROM
+#                             "file:///home/amruta/Amruta/london_underground/datasets/london-connections.csv" as row
+#                             MATCH (s1:Station{id:row.station1}),(s2:Station{id:row.station2}),(l:Line)
+#                             WHERE l.id = row.line
+#                             CALL apoc.create.relationship(s1,l.name,{time:row.time,line:row.line},s2) YIELD rel
+#                             RETURN rel
+
+
+# MATCH (a)-[r:`Bakerloo Line`]->(b), (l:Line) WHERE l.id=r.line CREATE (a)-[p:ON_LINE]->(l) RETURN p
+
+# MATCH (a)-[r:`Central Line`]->(b), (l:Line) WHERE l.id=r.line MERGE (a)-[p:ON_LINE]->(l) RETURN p
+# MATCH (a)-[r:`East London Line`]->(b), (l:Line) WHERE l.id=r.line MERGE (a)-[p:ON_LINE]->(l) RETURN p
+# MATCH (a)-[r:`District Line`]->(b), (l:Line) WHERE l.id=r.line MERGE (a)-[p:ON_LINE]->(l) RETURN p
+
+
+
+# MATCH (a)-[r]->(b) SET r.time = toInt(r.time)
+

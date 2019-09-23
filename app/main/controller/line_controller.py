@@ -9,21 +9,23 @@ _line = LineDao.line
 _station = StationDao.station
 
 
-
-
 @api.route('/')
 class LineList(Resource):
     @api.doc('list_of_all_lines')
     @api.marshal_list_with(_line,envelope='data')
     def get(self):
-        """Get list of all lines"""
+        """
+        Get list of all lines
+        """
         return get_lines()
 
-    @api.response(201,'line created successfully')
+    @api.response(201,'line successfully created')
     @api.doc('create_new_line')
     @api.expect(_line,validate=True)
     def post(self):
-        """Add a new line"""
+        """
+        Add a new line
+        """
         data =  request.json
         return add_line(data)
 
@@ -32,40 +34,44 @@ class LineList(Resource):
 @api.param('line_id')
 @api.response(404,'line not found')
 class Line(Resource):
-    @api.doc('get_line_with_id')
+    @api.doc(params={'line_id': 'Id associated with the line'})
     @api.marshal_with(_line)
     def get(self, line_id):
-        """Get line by Id"""
-        line = get_line(line_id=line_id)
-
-        if not line:
-            api.abort(404)
-        else:
-            return line
+        """
+        Get line by Id
+        """
+        return get_line(line_id=line_id)
 
 
 @api.route('/<string:line_name>')
 @api.param('line_name')
 @api.response(404,'line not found')
-class Line(Resource):
-    @api.doc('get_line_with_name')
+class LineName(Resource):
+    @api.doc(params={'line_name': 'Name of the line'})
     @api.marshal_with(_line)
     def get(self, line_name):
-        """Get line by name"""
-        line = get_line(line_name=line_name)
+        """
+        Get line by name
+        """
+        return get_line(line_name=line_name)
 
-        if not line:
-            api.abort(404)
-        else:
-            return line
+    @api.response(204, 'line successfully deleted')
+    @api.doc(params={'line_name': 'Name of the line'})
+    def delete(self, line_name):
+        """
+        Delete line
+        """
+        return delete_line(line_name)
 
 
-@api.route('/<string:line_name>/list-stations')
+@api.route('/<string:line_name>/stations')
 @api.param('line_name')
 @api.response(404,'line not found')
 class LineStations(Resource):
-    @api.doc('get_stations_of_given_line')
+    @api.doc(params={'line_name': 'Name of the line'})
     @api.marshal_list_with(_station,envelope='data')
     def get(self, line_name):
-        """Get all stations which are on given line"""
+        """
+        Get all stations which are on given line
+        """
         return get_stations(line_name=line_name)

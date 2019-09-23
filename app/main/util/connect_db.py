@@ -13,3 +13,14 @@ def get_session():
     session = driver.session()
 
     return session
+
+
+def execute_qry(query):
+
+    session = get_session()
+
+    res = session.run(query)
+
+    session.close()
+
+    return res
