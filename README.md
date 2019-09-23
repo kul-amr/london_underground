@@ -11,7 +11,7 @@ Added some REST API endpoints, so a caller can make queries like:
 GET /station/{station-id}
 GET /station/{station-name}
 GET /station/{station-name}/interchanges
-GET /line/{line-name}/list-stations
+GET /line/{line-name}/stations
 GET /route/{start-station-name}/{destination-station-name}
 
 
@@ -35,3 +35,8 @@ Can deploy this code by followig steps :
 Now the API endpoints will be accessible locally.
 
 ![Alt text](/screen_shots/screen1.png)
+![Alt text](/screen_shots/screen2.png)
+![Alt text](/screen_shots/screen3.png)
+![Alt text](/screen_shots/screen4.png)
+![Alt text](/screen_shots/screen5.png)
+![Alt text](/screen_shots/screen6.png)
