@@ -30,8 +30,9 @@ Can deploy this code by followig steps :
 
 2. Need to install neo4j graph database and create an environment variable "NEO4J_PASS" to store password
    for default user "neo4j". Create a local database which will hold the data.
-   (for now, here I am using Neo4j Graph Algorithm library for path finding, distance and connections queries. The plugins for
-   this library can be installed as https://neo4j.com/docs/graph-algorithms/current/introduction/#_installation)
+   (for now, here I am using Neo4j Graph Algorithm library (https://neo4j.com/docs/graph-algorithms/current/experimental-algorithms/pathfinding/)
+   for path finding, distance and connections queries. The plugins for this library can be installed as
+   https://neo4j.com/docs/graph-algorithms/current/introduction/#_installation)
 
 3. Load data into your local neo4j graph database by executing script load_data.py
 
