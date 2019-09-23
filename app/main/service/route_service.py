@@ -50,12 +50,13 @@ def get_route(start_station_name,destination_station_name):
 
                 rels = [rel for rel in relationships if (rel.start_node==m or rel.end_node==m) and (rel.start_node==n or rel.end_node==n) ]
 
-                route['line'] = rels[0].type
-                route['time'] = rels[0].get('time')
+                if len(rels)>0:
+                    route['line'] = rels[0].type
+                    route['time'] = rels[0].get('time')
 
-                result.append({'start' : start,
-                                'via': route,
-                                'end' : end})
+                    result.append({'start' : start,
+                                    'via': route,
+                                    'end' : end})
 
     return result, 200
 
