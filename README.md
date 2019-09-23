@@ -33,3 +33,5 @@ Can deploy this code by followig steps :
 
 
 Now the API endpoints will be accessible locally.
+
+![Alt text](/screen_shots/screen1.png)
