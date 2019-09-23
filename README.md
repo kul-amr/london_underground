@@ -6,6 +6,9 @@ So I started to exlpore a bit about Neo4j graph database and Cypher query langua
 Here I have created a backend with Python (flask-restplus) querying Neo4j garph database with Cypher queries. I have used london undergrounds
 data CSVs of list of stations,lines and connections between various stations.
 
+(Just in case- the graph representation of London underground is http://content.tfl.gov.uk/standard-tube-map.pdf )
+
+
 Loaded the list of stations, lines and connections for London_Underground from the CSV datasets.
 Built a representation of the stations and the connections between them.
 
