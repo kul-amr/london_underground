@@ -3,12 +3,14 @@ import os
 
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
+passwrd = os.environ.get("UNDERGROUND_NEO4J_PASS")
 
 
 def get_driver():
 
-    driver = GraphDatabase.driver('bolt://localhost', auth=basic_auth("neo4j", "graph"))
+    driver = GraphDatabase.driver('bolt://localhost', auth=basic_auth("neo4j", passwrd))
     return driver
+
 
 def create_schema():
 
@@ -40,6 +42,7 @@ def import_stations():
         session.run(qry_stations)
     session.close()
 
+
 def import_lines():
     driver = get_driver()
 
@@ -54,6 +57,7 @@ def import_lines():
     with driver.session() as session:
         session.run(qry_lines)
     session.close()
+
 
 def import_connections():
 
@@ -105,4 +109,3 @@ main()
 
 
 # MATCH (a)-[r]->(b) SET r.time = toInt(r.time)
-

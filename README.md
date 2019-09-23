@@ -21,7 +21,9 @@ Can deploy this code by followig steps :
 
     pip install -r requirements.txt
 
-2. Load data into your local neo4j graph database by executing script load_data.py
+2. Need to install neo4j graph database and create an environment variable "UNDERGROUND_NEO4J_PASS" to store password for default user "neo4j". Create a local database which will hold the data.
+
+3. Load data into your local neo4j graph database by executing script load_data.py
 
     python load_data.py
 
