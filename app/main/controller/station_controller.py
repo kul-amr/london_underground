@@ -87,7 +87,7 @@ class ClosestStation(Resource):
     @api.response(200, 'OK')
     def get(self,latitude,longitude):
         """
-        Returns closest station to given co-ordinates
+        Returns closest station to given co-ordinates, distance in meters
         """
         return get_closest_station(latitude,longitude)
 

@@ -3,7 +3,7 @@ import os
 
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
-passwrd = os.environ.get("UNDERGROUND_NEO4J_PASS")
+passwrd = os.environ.get("NEO4J_PASS")
 
 
 def get_driver():
@@ -37,7 +37,6 @@ def import_stations():
                    's.zone=row.zone,' \
                    ' s.total_lines=row.total_lines' %dir_path
 
-
     with driver.session() as session:
         session.run(qry_stations)
     session.close()
@@ -52,7 +51,6 @@ def import_lines():
                        ON CREATE SET l.name = row.name,
                          l.colour=row.colour,
                          l.stripe=row.stripe''' %dir_path
-
 
     with driver.session() as session:
         session.run(qry_lines)
@@ -70,9 +68,24 @@ def import_connections():
                             MERGE (s1)-[:CONNECTION{time:row.time,line:row.line}]->(s2)
                             MERGE (s1)<-[:CONNECTION{time:row.time,line:row.line}]-(s2)''' %dir_path
 
-
     with driver.session() as session:
         session.run(qry_connections)
+    session.close()
+
+
+def create_lines_relations():
+
+    driver = get_driver()
+
+    qry_rel = '''LOAD CSV WITH HEADERS FROM
+                            "file:///%s/datasets/london-connections.csv" as row
+                            MATCH (s1:Station{id:row.station1}),(s2:Station{id:row.station2}),(l:Line)
+                            WHERE l.id = row.line
+                            CALL apoc.create.relationship(s1,l.name,{time:row.time,line:row.line},s2) YIELD rel
+                            RETURN rel''' %dir_path
+
+    with driver.session() as session:
+        session.run(qry_rel)
     session.close()
 
 
