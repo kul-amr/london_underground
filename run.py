@@ -13,6 +13,14 @@ app.register_blueprint(blueprint)
 # CORS(app)
 
 
+@app.after_request
+def after_request(response):
+    print("in after_request")
+    header = response.headers
+    header['Access-Control-Allow-Origin'] = '*'
+    print(response)
+    return response
+
 @app.route('/<name>')
 def hello_name(name):
     return "hello {} !".format(name)

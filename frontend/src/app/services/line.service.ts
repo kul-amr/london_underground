@@ -4,6 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
 import { Line } from '../models/line.model';
 import { API_URL } from '../env';
+import { Station } from '../models/station.model';
 
 
 @Injectable({
@@ -11,23 +12,43 @@ import { API_URL } from '../env';
 })
 export class LineService {
 
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json'
-    })
-  };
+    httpOptions = {
+        headers: new HttpHeaders({
+            'Content-Type': 'application/json'
+        })
+    };
 
-  constructor(private http:HttpClient) { }
+    constructor(private http:HttpClient) { }
 
-  handleError(err){
-    return throwError(err.message || "Error in execution");
-  }
+    handleError(err){
+        console.log("in handleerror : ", err);
+        return throwError(err.message || "Error in execution");
+    }
 
-  getLines():Observable<Line[]>{
-    return this.http.get<Line[]>(API_URL+'/lines',this.httpOptions).pipe(
-      tap((resp) => {
-        console.log(resp);
-      }),
-      catchError(this.handleError));
-  }
+    getLines():Observable<Line[]>{
+        let url = API_URL+'/lines/';
+
+        return this.http.get(url).pipe(
+            map((res:Response)=>{
+                res['data'].forEach(element => {
+                    element['colour'] = "#"+element['colour'];
+                });
+                console.log("res['data']")
+                return res['data'];
+            }),
+            catchError(this.handleError)
+        );
+    }
+
+    getStationsByLine(lineName:string):Observable<Station[]>{
+        let url = API_URL+'/lines/'+lineName+'/stations';
+
+        return this.http.get(url).pipe(
+            map((res:Response)=>{
+                return res['data'];
+            }),
+            catchError(this.handleError)
+        );
+    }
+
 }

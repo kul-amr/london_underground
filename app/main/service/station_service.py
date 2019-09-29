@@ -102,3 +102,12 @@ def get_direct_connections(station_name):
         record_relationships.append(record_relationship)
 
     return [serialize_relationship(rel) for rel in record_relationships], 200
+
+
+def get_passing_lines(station_name):
+
+    line_qry = 'MATCH (a:Station)-[r:ON_LINE]-(b) WHERE a.name="{}" RETURN b'.format(station_name)
+
+    result_lines = execute_qry(line_qry)
+
+    return [serialize_line(record.get('b')) for record in result_lines], 200

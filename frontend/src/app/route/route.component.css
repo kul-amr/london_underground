@@ -1,0 +1,23 @@
+span{
+    display: inline-block;
+    /* width: 200px;
+    height: 100px; */
+}
+
+mat-card {
+    width: calc(100% - 70px);
+    height: calc(100% - 70px);
+}
+
+.stopSpan{
+    display: inline-block;
+}
+
+button{
+    margin-top: 50px;
+    margin-left: 180px;
+}
+
+/* .classp{
+    font-weight: bold;
+} */

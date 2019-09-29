@@ -8,6 +8,8 @@ def get_lines():
 
     liness_resultset = execute_qry(lines_qry)
 
+    print(liness_resultset)
+
     return [serialize_line(line) for line in liness_resultset], 200
 
 

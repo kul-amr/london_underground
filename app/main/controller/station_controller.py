@@ -2,11 +2,12 @@ from flask import request
 from flask_restplus import Resource
 from flask_restplus import fields
 
-from ..util.dao import StationDao
+from ..util.dao import StationDao, LineDao
 from ..service.station_service import *
 
 api = StationDao.api
 _station = StationDao.station
+_line = LineDao.line
 
 
 @api.route('/')
@@ -103,3 +104,16 @@ class StationConnections(Resource):
         Returns direct connection stations to given station
         """
         return get_direct_connections(station_name)
+
+
+@api.route('/<string:station_name>/lines')
+@api.param('station_name')
+@api.response(404,'station not found')
+class StationLines(Resource):
+    @api.doc(params={'station_name':'Name of the station'})
+    @api.marshal_list_with(_line,envelope='data')
+    def get(self,station_name):
+        """
+        Returns lines passing through the given station
+        """
+        return get_passing_lines(station_name)

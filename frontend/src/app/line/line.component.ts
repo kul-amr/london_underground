@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+
 import { LineService } from '../services/line.service';
 import { Line } from '../models/line.model';
 
@@ -16,10 +17,11 @@ export class LineComponent implements OnInit {
 
   ngOnInit() {
 
+    console.log("calling onint : ");
+
     this.lineService.getLines().subscribe(
         (res) => {
             this.lines = res;
-            console.log(this.lines);
         },
         (err) => {
             this.errMsg = "error as : "+ err;

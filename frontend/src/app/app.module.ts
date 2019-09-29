@@ -1,7 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatAutocompleteModule, MatInputModule, MatListModule } from '@angular/material';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatCardModule, MatSelectModule, MatFormFieldModule, MatGridListModule } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -30,7 +34,17 @@ import { FooterComponent } from './footer/footer.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatCardModule,
+    MatSelectModule,
+    MatFormFieldModule,
+    BrowserAnimationsModule,
+    MatGridListModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatAutocompleteModule,
+    MatInputModule,
+    MatListModule
   ],
   providers: [
     StationService,

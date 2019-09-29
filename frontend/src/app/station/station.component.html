@@ -1,1 +1,82 @@
-<p>station works!</p>
+<mat-grid-list cols="4" rowHeight="650px">
+    <mat-grid-tile [colspan] = "2" [rowspan] = "1">
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>Stations</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <span style="margin-left: 30px;">
+                    <h4>Pick a Line</h4>
+                    <mat-form-field>
+                        <mat-label>Line</mat-label>
+                        <mat-select (selectionChange)="onLineSelect($event.value)">
+                            <mat-option *ngFor="let line of lines" [value]="line.name">
+                                {{line.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </span>
+                <span style="margin-left: 100px;">
+                    <h4>Pick a Station</h4>
+                    <mat-form-field>
+                        <mat-label>Station</mat-label>
+                        <mat-select (selectionChange)="onStationSelect($event.value)" [disabled]="isStationSelDisabled">
+                            <mat-option *ngFor="let station of stations" [value]="station">
+                                {{station.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </span>
+                <p>OR</p>
+                <div style="padding: 30px;">
+                    <h4>Pick a Station</h4>
+                    <mat-form-field>
+                        <input type="text" placeholder="Station" matInput [formControl]="stationControl" 
+                        [matAutocomplete]="auto" (click)="onStationClick()">
+                        <mat-autocomplete #auto="matAutocomplete">
+                            <mat-option *ngFor="let station of filteredStations | async" [value]="station.name" (click)="onStationSelect(station)">
+                                {{station.name}}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan] = "2" [rowspan] = "1">
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>Station Details</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <mat-form-field class="stationInfo">
+                    <mat-label>Name : </mat-label>
+                    <input matInput type="text" value="{{selectedStation.name}}" readonly>
+                </mat-form-field>
+                <mat-form-field class="stationInfo">
+                    <mat-label>Zone : </mat-label>
+                    <input matInput type="text" value="{{selectedStation.zone}}" readonly>
+                </mat-form-field>
+                <mat-form-field class="stationInfo">
+                    <mat-label>Latitude : </mat-label>
+                    <input matInput type="text" value="{{selectedStation.latitude}}" readonly>
+                </mat-form-field>
+                <mat-form-field class="stationInfo">
+                    <mat-label>Longitude : </mat-label>
+                    <input matInput type="text" value="{{selectedStation.longitude}}" readonly>
+                </mat-form-field>
+                <label>Passing Lines :</label>
+                <mat-list>
+                    <mat-list-item *ngFor="let line of passingLines">
+                        <span class="lineSpan">
+                            <li>{{line.name}}</li>
+                        </span>
+                        <span class="lineSpan" style="margin-left: 50px;">
+                            <p class="linep" [style.color]="line.colour">=======</p>
+                        </span>
+                    </mat-list-item>
+                </mat-list>
+            </mat-card-content>
+        </mat-card>
+    </mat-grid-tile>
+</mat-grid-list>

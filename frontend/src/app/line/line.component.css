@@ -1,0 +1,15 @@
+ul{
+    height: 20px;
+}
+
+.mat-card{
+    height: 550px;
+}
+
+span{
+    display: inline-block;
+}
+
+p{
+    font-weight: bold;
+}

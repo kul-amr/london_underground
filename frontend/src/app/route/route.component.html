@@ -1,1 +1,59 @@
-<p>route works!</p>
+<mat-grid-list cols="4" rowHeight="650px">
+    <mat-grid-tile [colspan] = "2" [rowspan] = "1">
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>Routes</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <div>
+                    <span style="margin-left: 30px;">
+                        <h4>From Station</h4>
+                        <mat-form-field>
+                            <input type="text" placeholder="Station" matInput [formControl]="fromStationControl" 
+                            [matAutocomplete]="auto" (click)="fromStationClick()">
+                            <mat-autocomplete #auto="matAutocomplete">
+                                <mat-option *ngFor="let fromStation of filteredFromStations | async" [value]="fromStation.name">
+                                    {{fromStation.name}}
+                                </mat-option>
+                            </mat-autocomplete>
+                        </mat-form-field>
+                    </span>
+                    <span style="margin-left: 100px;">
+                        <h4>Destination Station</h4>
+                        <mat-form-field>
+                            <input type="text" placeholder="Station" matInput [formControl]="toStationControl" 
+                            [matAutocomplete]="auto" (click)="toStationClick()">
+                            <mat-autocomplete #auto="matAutocomplete">
+                                <mat-option *ngFor="let toStation of filteredToStations | async" [value]="toStation.name">
+                                    {{toStation.name}}
+                                </mat-option>
+                            </mat-autocomplete>
+                        </mat-form-field>
+                    </span>
+                </div>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-raised-button color="primary" (click)="getRoute()"[disabled]="isDisabled" >View Route</button>
+            </mat-card-actions>
+        </mat-card>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan] = "2" [rowspan] = "1">
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>Route Details</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <mat-list>
+                    <!-- <mat-list-item *ngFor="let station of stations">
+                        <span class="stopSpan">
+                            <li>{{line.name}}</li>
+                        </span>
+                        <span class="stopSpan" style="margin-left: 50px;">
+                            <p class="classp" [style.color]="line.colour">=======</p>
+                        </span>
+                    </mat-list-item> -->
+                </mat-list>
+            </mat-card-content>
+        </mat-card>
+    </mat-grid-tile>
+</mat-grid-list>

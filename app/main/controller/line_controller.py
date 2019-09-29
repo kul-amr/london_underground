@@ -1,5 +1,5 @@
 from flask import request
-from flask_restplus import Resource
+from flask_restplus import Resource, cors
 
 from ..util.dao import LineDao, StationDao
 from ..service.line_service import *
@@ -13,10 +13,12 @@ _station = StationDao.station
 class LineList(Resource):
     @api.doc('list_of_all_lines')
     @api.marshal_list_with(_line,envelope='data')
+    # @cors.crossdomain(origin='*')
     def get(self):
         """
         Get list of all lines
         """
+        print("caling lines ")
         return get_lines()
 
     @api.response(201,'line successfully created')
