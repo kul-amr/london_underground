@@ -22,7 +22,7 @@ export class RouteService {
 
         return this.http.get(url).pipe(
             map((res:Response) => {
-                console.log(res);
+                // console.log(res);
                 return res;
             }),
             catchError(this.handleError)

@@ -1,4 +1,4 @@
-span{
+.stations{
     display: inline-block;
     /* width: 200px;
     height: 100px; */
@@ -7,15 +7,31 @@ span{
 mat-card {
     width: calc(100% - 70px);
     height: calc(100% - 70px);
+    overflow:auto;
 }
 
 .stopSpan{
     display: inline-block;
 }
 
+.iconSpan{
+    padding-top: 50px;
+}
+
 button{
     margin-top: 50px;
     margin-left: 180px;
+}
+
+.aligned-with-icon{
+    position: absolute;
+    /* margin-top: 5px; */
+    margin-left: 10px;
+}
+
+p{
+    width: 300px;
+    height: 10px;
 }
 
 /* .classp{

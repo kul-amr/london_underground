@@ -1,3 +1,5 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
 <mat-grid-list cols="4" rowHeight="650px">
     <mat-grid-tile [colspan] = "2" [rowspan] = "1">
         <mat-card>
@@ -6,24 +8,24 @@
             </mat-card-header>
             <mat-card-content>
                 <div>
-                    <span style="margin-left: 30px;">
+                    <span class="stations" style="margin-left: 30px;">
                         <h4>From Station</h4>
                         <mat-form-field>
                             <input type="text" placeholder="Station" matInput [formControl]="fromStationControl" 
-                            [matAutocomplete]="auto" (click)="fromStationClick()">
-                            <mat-autocomplete #auto="matAutocomplete">
+                            [matAutocomplete]="autoFrom" (click)="fromStationClick()">
+                            <mat-autocomplete #autoFrom="matAutocomplete">
                                 <mat-option *ngFor="let fromStation of filteredFromStations | async" [value]="fromStation.name">
                                     {{fromStation.name}}
                                 </mat-option>
                             </mat-autocomplete>
                         </mat-form-field>
                     </span>
-                    <span style="margin-left: 100px;">
+                    <span class="stations" style="margin-left: 100px;">
                         <h4>Destination Station</h4>
                         <mat-form-field>
                             <input type="text" placeholder="Station" matInput [formControl]="toStationControl" 
-                            [matAutocomplete]="auto" (click)="toStationClick()">
-                            <mat-autocomplete #auto="matAutocomplete">
+                            [matAutocomplete]="autoTo" (click)="toStationClick()">
+                            <mat-autocomplete #autoTo="matAutocomplete">
                                 <mat-option *ngFor="let toStation of filteredToStations | async" [value]="toStation.name">
                                     {{toStation.name}}
                                 </mat-option>
@@ -43,15 +45,21 @@
                 <mat-card-title>Route Details</mat-card-title>
             </mat-card-header>
             <mat-card-content>
+                <div>Total Time : {{totalTime}}</div>
                 <mat-list>
-                    <!-- <mat-list-item *ngFor="let station of stations">
-                        <span class="stopSpan">
-                            <li>{{line.name}}</li>
-                        </span>
-                        <span class="stopSpan" style="margin-left: 50px;">
-                            <p class="classp" [style.color]="line.colour">=======</p>
-                        </span>
-                    </mat-list-item> -->
+                    <mat-list-item *ngFor="let step of route; let isLast = last">
+                        <div class="stopSpan">
+                            <br>
+                            <p>{{step.start.name}}</p>
+                            <span style="padding-bottom: 10px;">
+                                <mat-icon>arrow_downward</mat-icon><span class="aligned-with-icon">{{step.via.line}} , Time: {{step.via.time}}</span>
+                            </span>
+                            <br>
+                            <p *ngIf="isLast">{{step.end.name}}</p>
+                            <br>
+                        </div>
+                    </mat-list-item>
+                    <br>
                 </mat-list>
             </mat-card-content>
         </mat-card>

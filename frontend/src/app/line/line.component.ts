@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 import { LineService } from '../services/line.service';
-import { Line } from '../models/line.model';
+import { Station } from '../models/station.model';
 
 @Component({
   selector: 'app-line',
@@ -10,26 +11,35 @@ import { Line } from '../models/line.model';
 })
 export class LineComponent implements OnInit {
 
-  lines:Line[];
-  errMsg:string;
+    stations:Station[] = [];
+    errMsg:string;
+    lineName:string;
 
-  constructor(private lineService:LineService) { }
 
-  ngOnInit() {
+    constructor(private lineService:LineService, private route:ActivatedRoute) { 
+        console.log(this.route.queryParams);
 
-    console.log("calling onint : ");
+        this.route.params.subscribe(params => {
+            console.log("params as : ", params);
+            this.lineName = params['lineName'];
+        })
+    }
 
-    this.lineService.getLines().subscribe(
-        (res) => {
-            this.lines = res;
-        },
-        (err) => {
-            this.errMsg = "error as : "+ err;
-            console.log(this.errMsg);
-        },
-        () => {}
-    )
+    ngOnInit() {
 
-  }
+        console.log("linename is : ", this.lineName);
+
+        this.lineService.getStationsByLine(this.lineName).subscribe(
+            (res) => {
+                this.stations = res;
+            },
+            (err) => {
+                this.errMsg = "error as : "+ err;
+                console.log(this.errMsg);
+            },
+            () => {}
+        )
+
+    }
 
 }

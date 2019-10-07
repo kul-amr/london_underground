@@ -1,14 +1,11 @@
 <mat-card>
     <mat-card-header>
-        <mat-card-title>Lines</mat-card-title>
+        <mat-card-title>Stations On Line : {{lineName}}</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-        <ul *ngFor="let line of lines" >
+        <ul *ngFor="let station of stations" >
             <span>
-                <li>{{line.name}}</li>
-            </span>
-            <span style="padding: 15px;">
-                <p [style.color]="line.colour">=======</p>
+                <li>{{station.name}}</li>
             </span>
         </ul>
     </mat-card-content>

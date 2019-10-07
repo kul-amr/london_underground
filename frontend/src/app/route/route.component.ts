@@ -15,12 +15,14 @@ export class RouteComponent implements OnInit {
 
     fromStationControl = new FormControl();
     toStationControl = new FormControl();
-    stations:Station[]=[];
+    fromStations:Station[]=[];
+    toStations:Station[]=[];
     filteredFromStations:Observable<Station[]>;
     filteredToStations:Observable<Station[]>;
     errMsg:string;
     isDisabled:boolean=true;
     route=[];
+    totalTime:number=0;
 
     constructor(private stationService:StationService, private routeService:RouteService) { }
 
@@ -33,6 +35,8 @@ export class RouteComponent implements OnInit {
         this.routeService.getRoute(this.fromStationControl.value,this.toStationControl.value).subscribe(
             (res) => {
                 this.route = res;
+                this.totalTime = res.reduce((out,currElm) => out+currElm.via.time, 0);
+                console.log("total time is : ",this.totalTime);
             },
             (err) => {
                 this.errMsg = "error as : "+ err;
@@ -47,7 +51,7 @@ export class RouteComponent implements OnInit {
         this.filteredFromStations = this.fromStationControl.valueChanges
             .pipe(
                 startWith(''),
-                map(value => this._filter(value))
+                map(value => this._filter(value,this.fromStations))
             );
         console.log("filteredFromStations as : ", this.filteredFromStations);
     }
@@ -58,23 +62,24 @@ export class RouteComponent implements OnInit {
         this.filteredToStations = this.toStationControl.valueChanges
             .pipe(
                 startWith(''),
-                map(value => this._filter(value))
+                map(value => this._filter(value,this.toStations))
             );
         console.log("filteredToStations as : ", this.filteredToStations);
     }
 
-    private _filter(value:string){
-        console.log("calling filter : ", value, this.stations.length);
+    private _filter(value:string, stations){
+        console.log("calling filter : ", value, stations.length);
         var filterValue = value.toLowerCase();
-        return this.stations.filter(station => station.name.toLowerCase().includes(filterValue));
+        return stations.filter(station => station.name.toLowerCase().includes(filterValue));
     }
 
     getStations(){
         console.log("calling getStations")
         this.stationService.getStations().subscribe(
             (res) => {
-                this.stations = res;
-                console.log(this.stations.length);
+                this.fromStations = res;
+                this.toStations = res;
+                console.log(this.fromStations.length);
             },
             (err) => {
                 this.errMsg = "error as : "+ err;

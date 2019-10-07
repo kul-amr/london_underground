@@ -14,6 +14,7 @@ def serialize_station(station):
 def serialize_line(line):
 
     return {
+        # 'id':line["id"],
         'name': line["name"],
         'colour': line["colour"]
     }

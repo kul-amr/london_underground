@@ -4,13 +4,13 @@ from ..util.serializer import *
 
 def get_lines():
 
-    lines_qry = "MATCH (n:Line) RETURN n.name as name, n.colour as colour"
+    lines_qry = "MATCH (n:Line) RETURN n"
 
     liness_resultset = execute_qry(lines_qry)
 
     print(liness_resultset)
 
-    return [serialize_line(line) for line in liness_resultset], 200
+    return [serialize_line(line.get('n')) for line in liness_resultset], 200
 
 
 def add_line(data):

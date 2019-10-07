@@ -2,8 +2,9 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { StationComponent } from './station/station.component';
-import { LineComponent } from './line/line.component';
+import { LinesComponent } from './lines/lines.component';
 import { RouteComponent } from './route/route.component';
+import { LineComponent } from './line/line.component';
 
 
 const routes: Routes = [
@@ -16,12 +17,16 @@ const routes: Routes = [
     component:StationComponent
   },
   {
-    path:'line',
-    component:LineComponent
+    path:'lines',
+    component:LinesComponent
   },
   {
     path:'route',
     component:RouteComponent
+  },
+  {
+    path:'line/:lineName',
+    component:LineComponent
   },
   {
     path:'**',
